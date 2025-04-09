@@ -8,5 +8,5 @@ Mi principal pasión es la programación, especialmente el desarrollo web full-s
 
 Aqui esta la tabla de contenidos.
 
-```{https://cdm18.github.io/PlataformasWeb-2025/intro.html}
+```https://cdm18.github.io/PlataformasWeb-2025/intro.html
 ```
