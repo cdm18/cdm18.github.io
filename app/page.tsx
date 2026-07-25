@@ -131,6 +131,15 @@ export default function Home() {
                 >
                   Contactar
                 </motion.a>
+                <motion.a
+                    href="/CV-Carlos-Mejia.pdf"
+                    download
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="border-2 border-gray-600 hover:border-blue-400 hover:bg-blue-600/10 px-8 py-3 rounded-lg font-semibold transition-all flex items-center gap-2"
+                >
+                  <span>⬇️</span> Descargar CV
+                </motion.a>
               </motion.div>
 
               {/* Social Links */}
