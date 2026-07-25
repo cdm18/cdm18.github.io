@@ -24,20 +24,20 @@ export default function Home() {
                 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent"
                 whileHover={{ scale: 1.05 }}
             >
-              Portafolio
+              CDMF
             </motion.span>
             <div className="flex gap-6">
-              {['Inicio', 'Skills', 'Experiencia', 'Certificaciones', 'Proyectos', 'Contacto'].map((item, i) => (
+              {navItems.map((item, i) => (
                   <motion.a
-                      key={item}
-                      href={`#${item.toLowerCase()}`}
+                      key={item.href}
+                      href={item.href}
                       className="hover:text-blue-400 transition-colors text-sm hidden md:block"
                       whileHover={{ y: -2 }}
                       initial={{ opacity: 0, y: -20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.1 }}
                   >
-                    {item}
+                    {item.label}
                   </motion.a>
               ))}
             </div>
@@ -79,7 +79,7 @@ export default function Home() {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4 }}
               >
-                Full-Stack Developer <span className="text-blue-400">|</span> Backend Enthusiast
+                Full Stack Developer <span className="text-blue-400">|</span> Django · React · PostgreSQL
               </motion.h2>
               <motion.p
                   className="text-lg text-gray-400 mb-8 leading-relaxed"
@@ -87,8 +87,9 @@ export default function Home() {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
               >
-                Estudiante de 7mo ciclo de Ingeniería en Sistemas Computacionales en Loja, Ecuador.
-                Especializado en crear soluciones web innovadoras con Django, React y tecnologías modernas.
+                Estudiante de Ingeniería en Ciencias de la Computación (8.° ciclo de 9) en la UTPL,
+                Loja, Ecuador. Desarrollador Full Stack con productos reales en producción y
+                coautor de dos software registrados ante el SENADI.
               </motion.p>
 
               {/* Stats */}
@@ -98,7 +99,7 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.55 }}
               >
-                {stats.map((stat, i) => (
+                {stats.map((stat) => (
                     <div key={stat.label} className="text-center">
                       <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                         {stat.value}
@@ -130,6 +131,15 @@ export default function Home() {
                 >
                   Contactar
                 </motion.a>
+                <motion.a
+                    href="/CV-Carlos-Mejia.pdf"
+                    download
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="border-2 border-gray-600 hover:border-blue-400 hover:bg-blue-600/10 px-8 py-3 rounded-lg font-semibold transition-all flex items-center gap-2"
+                >
+                  <span>⬇️</span> Descargar CV
+                </motion.a>
               </motion.div>
 
               {/* Social Links */}
@@ -141,8 +151,8 @@ export default function Home() {
               >
                 {[
                   { icon: '💻', href: 'https://github.com/cdm18', label: 'GitHub' },
-                  { icon: '💼', href: '#', label: 'LinkedIn' },
-                  { icon: '📧', href: 'mailto:carlos_mejia2004@hotmail.com', label: 'Email' }
+                  { icon: '💼', href: 'https://www.linkedin.com/in/carlos-mejia-1315571aa', label: 'LinkedIn' },
+                  { icon: '📧', href: 'mailto:cdmejia4@utpl.edu.ec', label: 'Email' }
                 ].map((social) => (
                     <motion.a
                         key={social.label}
@@ -183,7 +193,7 @@ export default function Home() {
                   <div className="absolute inset-2 bg-gray-900 rounded-full overflow-hidden">
                     <Image
                         src="/profile.png"
-                        alt="Carlos Mejía"
+                        alt="Carlos Daniel Mejía Febres"
                         width={400}
                         height={400}
                         className="w-full h-full object-cover"
@@ -197,7 +207,7 @@ export default function Home() {
         </section>
 
         {/* About Section */}
-        <section className="py-32 px-4 relative">
+        <section id="sobre-mi" className="py-32 px-4 relative">
           <div className="max-w-6xl mx-auto">
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -208,6 +218,10 @@ export default function Home() {
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 Sobre <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Mí</span>
               </h2>
+              <p className="text-gray-400 text-lg max-w-3xl mx-auto">
+                Desarrollador Full Stack orientado a resultados, con experiencia real llevando
+                productos a producción y participando en registros de propiedad intelectual.
+              </p>
             </motion.div>
 
             <div className="grid md:grid-cols-3 gap-6">
@@ -277,13 +291,13 @@ export default function Home() {
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 Experiencia <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Profesional</span>
               </h2>
-              <p className="text-gray-400 text-lg">Mi trayectoria laboral</p>
+              <p className="text-gray-400 text-lg">Trayectoria laboral, académica y de liderazgo</p>
             </motion.div>
 
             <div className="space-y-8">
               {experience.map((exp, index) => (
                   <motion.div
-                      key={exp.company}
+                      key={`${exp.company}-${exp.role}`}
                       initial={{ opacity: 0, x: -30 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
@@ -295,12 +309,12 @@ export default function Home() {
                         whileHover={{ x: 10 }}
                         className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-2xl border border-gray-700 hover:border-blue-500 transition-all"
                     >
-                      <div className="flex flex-wrap justify-between items-start mb-4">
+                      <div className="flex flex-wrap justify-between items-start mb-4 gap-2">
                         <div>
                           <h3 className="text-2xl font-bold mb-2">{exp.role}</h3>
                           <p className="text-blue-400 font-semibold">{exp.company}</p>
                         </div>
-                        <span className="text-gray-400 text-sm">{exp.period}</span>
+                        <span className="text-gray-400 text-sm whitespace-nowrap">{exp.period}</span>
                       </div>
                       <ul className="space-y-2 text-gray-400">
                         {exp.responsibilities.map((resp, i) => (
@@ -317,8 +331,158 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Education Section */}
+        <section id="educacion" className="py-32 px-4 bg-gradient-to-b from-transparent via-gray-900/50 to-transparent relative">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-center mb-16"
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                Formación <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Académica</span>
+              </h2>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {education.map((edu, index) => (
+                  <motion.div
+                      key={edu.institution}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                      whileHover={{ y: -5 }}
+                      className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-2xl border border-gray-700 hover:border-blue-500 transition-all"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="text-4xl">{edu.icon}</div>
+                      <div>
+                        <h3 className="text-xl font-bold mb-1">{edu.degree}</h3>
+                        <p className="text-blue-400 font-semibold mb-1">{edu.institution}</p>
+                        <p className="text-gray-400 text-sm mb-3">{edu.period}</p>
+                        <p className="text-gray-400 text-sm leading-relaxed">{edu.detail}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Projects Section */}
+        <section id="proyectos" className="py-32 px-4 relative">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-center mb-16"
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                Proyectos <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Destacados</span>
+              </h2>
+              <p className="text-gray-400 text-lg">Productos reales, algunos en producción y con registro de propiedad intelectual</p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {projects.map((project, index) => (
+                  <motion.div
+                      key={project.title}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.2 }}
+                      whileHover={{ y: -10 }}
+                      className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden border border-gray-700 hover:border-blue-500 transition-all shadow-lg hover:shadow-blue-500/20 group"
+                  >
+                    <div className="p-8">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                          {project.icon}
+                        </div>
+                        <div>
+                          <h3 className="text-2xl font-bold">{project.title}</h3>
+                          {project.link && (
+                              <a
+                                  href={project.link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-blue-400 text-sm hover:underline"
+                              >
+                                {project.link.replace('https://', '')}
+                              </a>
+                          )}
+                        </div>
+                      </div>
+                      <p className="text-gray-400 mb-6 leading-relaxed">{project.description}</p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {project.technologies.map(tech => (
+                            <span key={tech} className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 px-4 py-1 rounded-full text-sm font-medium">
+                        {tech}
+                      </span>
+                        ))}
+                      </div>
+                      {project.achievements && (
+                          <ul className="space-y-1 text-sm text-gray-400">
+                            {project.achievements.map((achievement, i) => (
+                                <li key={i} className="flex items-start gap-2">
+                                  <span className="text-green-400">✓</span>
+                                  <span>{achievement}</span>
+                                </li>
+                            ))}
+                          </ul>
+                      )}
+                    </div>
+                  </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Recognition & Intellectual Property Section */}
+        <section id="reconocimientos" className="py-32 px-4 bg-gradient-to-b from-transparent via-gray-900/50 to-transparent relative">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-center mb-16"
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                Propiedad Intelectual <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">& Reconocimientos</span>
+              </h2>
+              <p className="text-gray-400 text-lg">Software registrado ante el SENADI y logros destacados</p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {recognitions.map((item, index) => (
+                  <motion.div
+                      key={item.title}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                      whileHover={{ y: -5 }}
+                      className="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-2xl border border-gray-700 hover:border-blue-500 transition-all group"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="text-4xl group-hover:scale-110 transition-transform">{item.icon}</div>
+                      <div>
+                        <h3 className="font-bold text-lg mb-1 group-hover:text-blue-400 transition-colors">{item.title}</h3>
+                        <p className="text-blue-400 text-sm font-semibold mb-1">{item.issuer}</p>
+                        <p className="text-gray-400 text-sm">{item.detail}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Certifications Section */}
-        <section id="certificaciones" className="py-32 px-4 bg-gradient-to-b from-transparent via-gray-900/50 to-transparent relative">
+        <section id="certificaciones" className="py-32 px-4 relative">
           <div className="max-w-6xl mx-auto">
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -361,64 +525,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Projects Section */}
-        <section id="proyectos" className="py-32 px-4 relative">
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center mb-16"
-            >
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                Proyectos <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Destacados</span>
-              </h2>
-              <p className="text-gray-400 text-lg">Algunos de mis trabajos más recientes</p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              {projects.map((project, index) => (
-                  <motion.div
-                      key={project.title}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.2 }}
-                      whileHover={{ y: -10 }}
-                      className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden border border-gray-700 hover:border-blue-500 transition-all shadow-lg hover:shadow-blue-500/20 group"
-                  >
-                    <div className="p-8">
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                          {project.icon}
-                        </div>
-                        <h3 className="text-2xl font-bold">{project.title}</h3>
-                      </div>
-                      <p className="text-gray-400 mb-6 leading-relaxed">{project.description}</p>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {project.technologies.map(tech => (
-                            <span key={tech} className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 px-4 py-1 rounded-full text-sm font-medium">
-                        {tech}
-                      </span>
-                        ))}
-                      </div>
-                      {project.achievements && (
-                          <ul className="space-y-1 text-sm text-gray-400">
-                            {project.achievements.map((achievement, i) => (
-                                <li key={i} className="flex items-start gap-2">
-                                  <span className="text-green-400">✓</span>
-                                  <span>{achievement}</span>
-                                </li>
-                            ))}
-                          </ul>
-                      )}
-                    </div>
-                  </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Contact Section */}
         <section id="contacto" className="py-32 px-4 bg-gradient-to-b from-transparent via-gray-900/50 to-transparent relative">
           <div className="max-w-4xl mx-auto text-center">
@@ -431,7 +537,8 @@ export default function Home() {
                 ¿Trabajemos <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Juntos?</span>
               </h2>
               <p className="text-xl text-gray-400 mb-12">
-                ¿Tienes un proyecto en mente? Estoy disponible para freelance, colaboraciones y oportunidades laborales.
+                Estoy disponible para prácticas, colaboraciones y oportunidades laborales.
+                ¿Hablamos?
               </p>
 
               <div className="grid md:grid-cols-3 gap-6">
@@ -476,133 +583,136 @@ export default function Home() {
 }
 
 // Data
+const navItems = [
+  { label: 'Inicio', href: '#inicio' },
+  { label: 'Sobre mí', href: '#sobre-mi' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Experiencia', href: '#experiencia' },
+  { label: 'Proyectos', href: '#proyectos' },
+  { label: 'Certificaciones', href: '#certificaciones' },
+  { label: 'Contacto', href: '#contacto' },
+]
+
 const stats = [
-  { value: '7°', label: 'Ciclo' },
-  { value: '4+', label: 'Proyectos' },
-  { value: '8+', label: 'Certificaciones' }
+  { value: '8.°', label: 'Ciclo (de 9)' },
+  { value: '2', label: 'Registros SENADI' },
+  { value: '6+', label: 'Proyectos' }
 ]
 
 const aboutCards = [
   {
     icon: '🎓',
     title: 'Educación',
-    description: '7mo ciclo de Ingeniería en Sistemas Computacionales con enfoque en desarrollo web y backend.'
-  },
-  {
-    icon: '💡',
-    title: 'Innovación',
-    description: 'Apasionado por crear soluciones tecnológicas que resuelvan problemas reales y mejoren la vida de las personas.'
+    description: 'Ingeniería en Ciencias de la Computación en la UTPL (8.° ciclo de 9), con titulación prevista para febrero de 2027.'
   },
   {
     icon: '🚀',
-    title: 'Objetivos',
-    description: 'Convertirme en un desarrollador full-stack senior y contribuir a proyectos de impacto internacional.'
+    title: 'Productos en Producción',
+    description: 'Diseñé y desplegué WeHome (wehome.com.ec), un e-commerce completo para la cadena de suministro de materiales de construcción.'
+  },
+  {
+    icon: '🛡️',
+    title: 'Propiedad Intelectual',
+    description: 'Coautor y cotitular de dos software registrados ante el SENADI: PyWallet y la Bolsa de Empleos Digital.'
   }
 ]
 
 const skills = [
   { name: 'Python', icon: '🐍' },
   { name: 'Django', icon: '🎯' },
-  { name: 'React', icon: '⚛️' },
-  { name: 'Next.js', icon: '▲' },
-  { name: 'Angular', icon: '🅰️' },
-  { name: 'JavaScript', icon: '💛' },
+  { name: 'Django REST', icon: '🔌' },
+  { name: 'React.js', icon: '⚛️' },
   { name: 'TypeScript', icon: '💙' },
-  { name: 'Tailwind CSS', icon: '🎨' },
-  { name: 'Flutter', icon: '📱' },
+  { name: 'JavaScript', icon: '💛' },
   { name: 'PostgreSQL', icon: '🐘' },
-  { name: 'Git', icon: '📦' },
-  { name: 'Firebase', icon: '🔥' },
-  { name: 'PHP', icon: '🐘' },
-  { name: 'WordPress', icon: '📝' },
-  { name: 'HTML/CSS', icon: '🌐' },
-  { name: 'REST APIs', icon: '🔌' },
+  { name: 'Docker', icon: '🐳' },
+  { name: 'Git & GitHub', icon: '🐙' },
+  { name: 'CI/CD', icon: '🔄' },
+  { name: 'NumPy', icon: '🔢' },
+  { name: 'Pandas', icon: '🐼' },
+  { name: 'Tableau', icon: '📊' },
+  { name: 'HTML / CSS', icon: '🌐' },
+  { name: 'C#', icon: '🎵' },
+  { name: 'Unity', icon: '🎮' },
+  { name: 'Cisco CCNA', icon: '🛰️' },
+  { name: 'SCRUM', icon: '🏃' },
+  { name: 'UML / EA', icon: '📐' },
+  { name: 'REST APIs', icon: '🔗' },
 ]
 
 const experience = [
   {
-    role: 'Manejo Avanzado en Equipos Informáticos',
-    company: 'ACCESNET Soluciones Informáticas',
-    period: '2023 - 2024',
+    role: 'Desarrollador Full Stack — Proyecto WeHome',
+    company: 'Cliente privado · Sector construcción',
+    period: '2024 – Presente',
     responsibilities: [
-      'Atención al cliente y gestión del establecimiento',
-      'Diagnóstico y solución de problemas de software en equipos de escritorio y móviles',
-      'Reparación y mantenimiento de hardware',
-      'Eficiencia en resolución de tareas de ofimática'
+      'Diseñé y desplegué una plataforma e-commerce de extremo a extremo, actualmente en producción en wehome.com.ec',
+      'Modelé la base de datos relacional, autenticación JWT y módulo de gestión de inventario con Django REST + React.js + PostgreSQL',
+      'Desplegué la aplicación en contenedores Docker e implementé un flujo de integración continua mediante GitHub'
     ]
   },
   {
-    role: 'Asistente Diseñador Gráfico',
-    company: 'Deportivo Cat',
-    period: '2022 - 2023',
+    role: 'Desarrollador de Software — Equipo de Innovación',
+    company: 'UTPL · Parque Científico y Tecnológico (Bolsa de Empleos Digital)',
+    period: 'Oct. 2024 – May. 2026',
     responsibilities: [
-      'Diseño de uniformes deportivos y vestimenta personalizada',
-      'Servicio de producción textil',
-      'Gestión y atención al cliente',
-      'Manejo de software de diseño gráfico profesional'
+      'Desarrollé la plataforma Bolsa de Empleos Digital gestionando ciclos completos de DevOps: planificación, control de versiones, pruebas, despliegue e iteración continua',
+      'Apliqué la metodología ágil SCRUM para coordinar sprints, revisiones y entregas incrementales',
+      'Participé en el proceso de registro de propiedad intelectual ante el SENADI (Reg. QUI-072056)'
     ]
   },
   {
-    role: 'Desarrollador Full-Stack (Freelance)',
-    company: 'Proyectos Independientes',
-    period: '2023 - Presente',
+    role: 'Desarrollador Backend — Sistema de Facturación Electrónica',
+    company: 'Proyecto personal',
+    period: '2024 – 2025',
     responsibilities: [
-      'Desarrollo de aplicaciones web con Django y React',
-      'Creación de aplicaciones móviles con Flutter',
-      'Implementación de sistemas de facturación electrónica',
-      'Gestión de bases de datos y APIs RESTful'
+      'Construí un sistema completo de facturación en Python/Django: generación de comprobantes, gestión de clientes y exportación de reportes',
+      'Diseñé módulos de reportería aplicables a entornos corporativos de registro y trazabilidad de costos operativos'
+    ]
+  },
+  {
+    role: 'Pasante de Sistemas',
+    company: 'UTPL · Dirección de TIC y Transformación Digital',
+    period: 'Abr. 2025 – Jul. 2025',
+    responsibilities: [
+      'Contribuí en proyectos de transformación digital institucional bajo supervisión del Director de TIC (96 horas)',
+      'Desarrollé y mantuve soluciones de software en un entorno universitario TI real, coordinando con equipos técnicos y administrativos'
+    ]
+  },
+  {
+    role: 'Desarrollador Web — Reto Empresarial',
+    company: 'Cámara de Comercio de Loja · Semestre Ascendere',
+    period: 'Abr. 2025 – Jul. 2025',
+    responsibilities: [
+      'Diseñé y lancé un portal web funcional como respuesta a un reto real propuesto por la Cámara de Comercio de Loja',
+      'Proyecto evaluado y certificado por el sector empresarial'
+    ]
+  },
+  {
+    role: 'Participante — Proyecto "Vulcano"',
+    company: 'UTPL · Academia Ascendere (Parque Científico, LiiD, XRLAB)',
+    period: 'Abr. 2023 – Feb. 2024',
+    responsibilities: [
+      'Participé en un proyecto de innovación educativa de 192 horas que integró realidad extendida (XRLAB)',
+      'Investigación aplicada en tecnología educativa'
     ]
   }
 ]
 
-const certifications = [
+const education = [
   {
-    title: 'Proficiencia en Python',
-    issuer: 'Cisco Networking Academy',
-    date: 'Mayo 2023',
-    icon: '🐍'
+    icon: '🎓',
+    degree: 'Ingeniería en Ciencias de la Computación',
+    institution: 'Universidad Técnica Particular de Loja (UTPL)',
+    period: '2022 – Feb. 2027 (prevista) · 8.° ciclo de 9',
+    detail: 'Materias relevantes: Redes y Comunicaciones, Bases de Datos, Desarrollo de Software, Estructuras de Datos, Sistemas Operativos, Ingeniería de Software, Ingeniería en Datos y Visualización con Tableau. Prácticas preprofesionales en la Dirección de TIC (96 h) y el Parque Científico y Tecnológico (96 h).'
   },
   {
-    title: 'Python y Data Science',
-    issuer: 'Udemy Academy',
-    date: 'Marzo 2023',
-    icon: '📊'
-  },
-  {
-    title: 'Curso Práctico en Django',
-    issuer: 'Udemy Academy',
-    date: 'Abril 2024',
-    icon: '🎯'
-  },
-  {
-    title: 'Proficiencia en Angular + Django',
-    issuer: 'Udemy Academy',
-    date: 'Diciembre 2025',
-    icon: '🅰️'
-  },
-  {
-    title: 'POO + Diseño Web',
-    issuer: 'Udemy Academy',
-    date: 'Abril 2025',
-    icon: '💻'
-  },
-  {
-    title: 'PHP, WordPress, HTML + CSS',
-    issuer: 'Udemy Academy',
-    date: 'Abril 2025',
-    icon: '🌐'
-  },
-  {
-    title: 'Proficiencia en Inglés',
-    issuer: 'Fine Tuned English',
-    date: '2020',
-    icon: '🇬🇧'
-  },
-  {
-    title: 'Bachillerato en Ciencias',
-    issuer: 'U.E. Fiscomisional Calasanz',
-    date: '2022',
-    icon: '🎓'
+    icon: '🏫',
+    degree: 'Bachillerato en Ciencias',
+    institution: 'Unidad Educativa Fiscomisional Calasanz',
+    period: 'Graduado en junio 2022',
+    detail: 'Formación secundaria con especialización en ciencias, Loja, Ecuador.'
   }
 ]
 
@@ -610,46 +720,131 @@ const projects = [
   {
     title: 'WeHome',
     icon: '🏠',
-    description: 'Plataforma e-commerce completa para materiales de construcción en Loja, Ecuador. Sistema robusto con gestión de inventario en tiempo real, carrito de compras inteligente y pasarela de pagos integrada.',
-    technologies: ['Django', 'React', 'PostgreSQL', 'Stripe', 'Redis'],
+    link: 'https://wehome.com.ec',
+    description: 'Plataforma e-commerce de extremo a extremo para la cadena de suministro de materiales de construcción, actualmente en producción. Incluye autenticación JWT y gestión de inventario en tiempo real.',
+    technologies: ['Django REST', 'React.js', 'PostgreSQL', 'Docker', 'CI/CD'],
     achievements: [
-      'Sistema de inventario en tiempo real',
-      'Integración con múltiples métodos de pago',
-      'Panel administrativo personalizado'
+      'En producción en wehome.com.ec',
+      'Despliegue en contenedores Docker',
+      'Integración continua vía GitHub'
     ]
   },
   {
-    title: 'App Educativa Interactiva',
-    icon: '📚',
-    description: 'Aplicación móvil multiplataforma de quizzes educativos con sistema de gamificación avanzado, seguimiento de progreso del estudiante y generación de reportes.',
-    technologies: ['Flutter', 'Firebase', 'Dart', 'Cloud Functions'],
-    achievements: [
-      'Más de 100+ preguntas categorizadas',
-      'Sistema de logros y recompensas',
-      'Analytics de rendimiento estudiantil'
-    ]
-  },
-  {
-    title: 'Sistema de Facturación SRI',
+    title: 'Bolsa de Empleos Digital',
     icon: '💼',
-    description: 'Sistema completo de facturación electrónica cumpliendo normativas del SRI Ecuador. Generación automática de XML, RIDE en PDF y autorización en tiempo real.',
-    technologies: ['Django', 'Python', 'PostgreSQL', 'Celery', 'XML'],
+    description: 'Plataforma de bolsa de empleo digital desarrollada en la UTPL con un equipo multidisciplinario, gestionando ciclos completos de DevOps bajo metodología SCRUM.',
+    technologies: ['Django', 'SCRUM', 'DevOps', 'Git'],
     achievements: [
-      'Cumplimiento total normativa SRI',
-      'Autorización automática de comprobantes',
-      'Generación de reportes contables'
+      'Registrada ante el SENADI (Reg. QUI-072056)',
+      'Coautor y cotitular del software',
+      'Ciclos completos de DevOps e iteración continua'
     ]
   },
   {
-    title: 'Portfolio Personal',
-    icon: '✨',
-    description: 'Portafolio web profesional con diseño moderno, animaciones fluidas con Framer Motion y totalmente responsive. Optimizado para SEO y rendimiento.',
-    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+    title: 'PyWallet — Billetera Virtual',
+    icon: '💳',
+    description: 'Aplicación de billetera digital desarrollada en la UTPL. Registrada como obra de software ante el SENADI bajo el COESCCI.',
+    technologies: ['Python', 'Django', 'PostgreSQL'],
     achievements: [
-      'Animaciones suaves y profesionales',
-      '100% responsive design',
-      'Desplegado en GitHub Pages'
+      'Registrada ante el SENADI (Reg. QUI-071386)',
+      'Coautor y cotitular del software',
+      'Reconocida en PuntoPymes (BillWallet)'
     ]
+  },
+  {
+    title: 'Sistema de Facturación Electrónica',
+    icon: '🧾',
+    description: 'Sistema completo de facturación en Python/Django: generación de comprobantes, gestión de clientes y exportación de reportes para entornos corporativos.',
+    technologies: ['Python', 'Django', 'PostgreSQL', 'Reportería'],
+    achievements: [
+      'Generación de comprobantes y gestión de clientes',
+      'Módulos de reportería y trazabilidad de costos',
+      'Exportación de reportes operativos'
+    ]
+  }
+]
+
+const recognitions = [
+  {
+    icon: '🛡️',
+    title: 'PyWallet — Billetera Virtual',
+    issuer: 'SENADI Ecuador · Reg. QUI-071386',
+    detail: 'Coautor y cotitular de software registrado bajo el COESCCI (abr. 2026).'
+  },
+  {
+    icon: '🛡️',
+    title: 'Bolsa de Empleos Digital',
+    issuer: 'SENADI Ecuador · Reg. QUI-072056',
+    detail: 'Coautor y cotitular de software registrado (may. 2026).'
+  },
+  {
+    icon: '🏆',
+    title: '3.er lugar — Categoría Junior de Programación',
+    issuer: 'ProgrOlimpiadas UTPL · FEUTPL',
+    detail: 'Tercer puesto en la olimpiada universitaria de programación (jun. 2024).'
+  },
+  {
+    icon: '🌟',
+    title: 'Reconocimiento — Desarrollo de BillWallet',
+    issuer: 'PuntoPymes Software Development Center',
+    detail: 'Distinción por compromiso, creatividad y habilidades técnicas (ene. 2025).'
+  }
+]
+
+const certifications = [
+  {
+    title: 'CCNA: Conmutación, Enrutamiento y Redes Inalámbricas',
+    issuer: 'Cisco Networking Academy / UTPL',
+    date: 'Feb. 2026',
+    icon: '🛰️'
+  },
+  {
+    title: 'CCNA: Introducción a las Redes',
+    issuer: 'Cisco Networking Academy / UTPL',
+    date: 'Jul. 2025',
+    icon: '🌐'
+  },
+  {
+    title: 'Python Essentials 1',
+    issuer: 'Cisco Networking Academy + OpenEDG',
+    date: 'May. 2023',
+    icon: '🐍'
+  },
+  {
+    title: 'Django — Desarrollo Web Backend (12,5 h)',
+    issuer: 'Udemy',
+    date: 'Ene. 2025',
+    icon: '🎯'
+  },
+  {
+    title: 'Maestro de Python (36,5 h)',
+    issuer: 'Udemy',
+    date: 'Mar. 2023',
+    icon: '📘'
+  },
+  {
+    title: 'Python para Data Science A-Z (10 h)',
+    issuer: 'Udemy',
+    date: '2023',
+    icon: '📊'
+  },
+  {
+    title: 'NumPy y Pandas para Data Science (5 h)',
+    issuer: 'Udemy',
+    date: '2023',
+    icon: '🐼'
+  },
+  {
+    title: 'Liderazgo y Gestión de Equipos (5 h)',
+    issuer: 'Udemy',
+    date: '2024',
+    icon: '🧭'
+  },
+  {
+    title: 'Certificado de Proficiencia en Inglés B1 (1 000 h)',
+    issuer: 'Fine-Tuned English Language Institute (SETEC/CEFR)',
+    date: '2020',
+    icon: '🇬🇧'
   }
 ]
 
@@ -657,19 +852,19 @@ const contactMethods = [
   {
     icon: '📧',
     label: 'Email',
-    value: 'carlos_mejia2004@hotmail.com',
-    href: 'mailto:carlos_mejia2004@hotmail.com'
+    value: 'cdmejia4@utpl.edu.ec',
+    href: 'mailto:cdmejia4@utpl.edu.ec'
+  },
+  {
+    icon: '💼',
+    label: 'LinkedIn',
+    value: 'carlos-mejia-1315571aa',
+    href: 'https://www.linkedin.com/in/carlos-mejia-1315571aa'
   },
   {
     icon: '💻',
     label: 'GitHub',
     value: 'github.com/cdm18',
     href: 'https://github.com/cdm18'
-  },
-  {
-    icon: '📱',
-    label: 'WhatsApp',
-    value: '+593 98 721 7450',
-    href: 'https://wa.me/593987217450'
   }
 ]
