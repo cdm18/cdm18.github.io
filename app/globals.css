@@ -1,58 +1,214 @@
 @import "tailwindcss";
 
-@theme inline {
-  --color-background: #0a0a0a;
-  --color-foreground: #ededed;
-  --font-sans: Arial, Helvetica, sans-serif;
-}
-
-body {
-  background: var(--color-background);
-  color: var(--color-foreground);
-  margin: 0;
-  padding: 0;
+:root {
+  --bg: #06060a;
+  --bg-soft: #0b0b12;
+  --fg: #f4f4f6;
+  --muted: #a1a1b0;
+  --line: rgba(255, 255, 255, 0.08);
+  --accent: #67e8f9;
+  --accent-2: #818cf8;
 }
 
 * {
   box-sizing: border-box;
 }
 
-@keyframes blob {
-  0% {
-    transform: translate(0px, 0px) scale(1);
-  }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1);
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
 }
 
-.animate-blob {
-  animation: blob 7s infinite;
+body {
+  background: var(--bg);
+  color: var(--fg);
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
 }
 
-.animation-delay-2000 {
-  animation-delay: 2s;
+.font-display {
+  font-family: var(--font-display), system-ui, sans-serif;
+  letter-spacing: -0.02em;
 }
 
-.animation-delay-4000 {
-  animation-delay: 4s;
+.font-serif-italic {
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
 }
 
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+::selection {
+  background: rgba(103, 232, 249, 0.28);
+  color: #fff;
 }
 
-.animate-spin-slow {
-  animation: spin-slow 8s linear infinite;
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* ---------- Liquid glass ---------- */
+.glass {
+  position: relative;
+  background: rgba(255, 255, 255, 0.045);
+  backdrop-filter: blur(22px) saturate(165%);
+  -webkit-backdrop-filter: blur(22px) saturate(165%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    0 10px 40px -12px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Specular top highlight — the iOS "liquid" catch of light */
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 80% at 15% -10%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 55%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 30%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.glass-hover {
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+.glass-hover:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 24px 60px -18px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 0 1px rgba(103, 232, 249, 0.12);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ---------- Accent helpers ---------- */
+.text-gradient {
+  background: linear-gradient(100deg, var(--accent) 0%, var(--accent-2) 60%, #f0abfc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.accent-ring {
+  box-shadow: 0 0 0 1px rgba(103, 232, 249, 0.4), 0 0 40px -6px rgba(103, 232, 249, 0.35);
+}
+
+/* ---------- Aurora background ---------- */
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.aurora span {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.5;
+  will-change: transform;
+}
+.aurora .a1 {
+  width: 42vw;
+  height: 42vw;
+  left: -8vw;
+  top: -6vw;
+  background: radial-gradient(circle at 30% 30%, #4f46e5, transparent 70%);
+  animation: drift1 22s ease-in-out infinite;
+}
+.aurora .a2 {
+  width: 38vw;
+  height: 38vw;
+  right: -6vw;
+  top: 20vh;
+  background: radial-gradient(circle at 60% 40%, #06b6d4, transparent 70%);
+  animation: drift2 26s ease-in-out infinite;
+}
+.aurora .a3 {
+  width: 34vw;
+  height: 34vw;
+  left: 30vw;
+  bottom: -10vw;
+  background: radial-gradient(circle at 50% 50%, #7c3aed, transparent 70%);
+  animation: drift3 30s ease-in-out infinite;
+}
+
+@keyframes drift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(6vw, 8vh) scale(1.1); }
+}
+@keyframes drift2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-7vw, 6vh) scale(1.15); }
+}
+@keyframes drift3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(4vw, -8vh) scale(1.08); }
+}
+
+/* ---------- Fine grain texture ---------- */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Grid overlay ---------- */
+.grid-lines {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 80%);
+}
+
+/* ---------- Marquee ---------- */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: inline-flex;
+  animation: marquee 32s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .aurora span,
+  .marquee-track { animation: none !important; }
 }
